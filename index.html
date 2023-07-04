@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>长颈鹿的音乐播放器</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+    <div class="zhuti">
+        <!-- 播放器主体区域 -->
+
+
+
+        <div class="nav">
+            <div class="item"><i class="fa">发现音乐</i></div>
+            <div class="item"><i class="fa">音乐推荐</i></div>
+        </div>
+
+        <div class="play_zhuti" id="player">
+            <div class="play_zhuti hide active select" id="player">
+                <!-- 头部 -->
+                <div class="sousuo">
+                    <!-- <img src="images/touxiang.png" alt="" /> -->
+                    
+    
+                    <div class="tab-item2">
+                        <div></div>
+                        <div></div>
+                    </div>
+    
+    
+                    <!-- 搜索歌曲 -->
+                    <input v-model="query" @keyup.enter="searchMusic" type="text" autocomplete="off" placeholder="请输入你想搜索的歌曲/歌手" />
+                    <a href="#" @click="searchMusic"></a>
+                </div>
+                <!-- 主体部分 -->
+                <div class="center_con">
+                    <!-- 搜索歌曲列表 -->
+                    <div class="song_wrapper">
+                        <ul class="song_list">
+                            <li v-for="item in musicList">
+                                <a href="javascript:;" @click="playMusic(item.id)"></a>
+                                <b>{{ item.name }}</b>
+                                <span v-if="item.mvid!=0" @click="playMV(item.mvid)"><i></i></span>
+                            </li>
+                        </ul>
+                        <!-- 小竖线 -->
+                        <img src="images/line.png" class="switch_btn" alt="">
+                    </div>
+                    <!-- 歌曲信息容器 -->
+                    <div class="player_con" :class="{playing:isPlaying}">
+                        <img src="images/player_bar.png" class="play_bar" />
+                        <!-- 黑胶碟片 -->
+                        <img src="images/disc.png" class="disc autoRotate" />
+                        <img :src=" musicCover" class="cover autoRotate" />
+                    </div>
+                    <!-- 评论容器 -->
+                    <div class="comment_wrapper">
+                        <h5 class="title">热门留言</h5>
+                        <div class="comment_list">
+                            <dl v-for="item in hotComments">
+                                <dt><img :src="item.user.avatarUrl" alt=""></dt>
+                                <dd class="name">{{ item.user.nickname }}</dd>
+                                <dd class="detail">{{ item.content }}</dd>
+                            </dl>
+                        </div>
+                        <!-- 小竖线 -->
+                        <img src="images/line.png" class="right_line">
+                    </div>
+                </div>
+                <!-- 底部播放器 -->
+                <div class="audio_con">
+                    <audio :src="musicUrl" @play="play" @pause="pause" ref='audio' controls autoplay loop class="myaudio"></audio>
+                </div>
+                <!-- 播放mv前的遮罩层 -->
+                <div class="video_con" style="display: none;" v-show="isShow">
+                    <video :src="mvUrl" controls="controls"></video>
+                    <div class="mask" @click="hide"></div>
+                </div>
+            </div>
+    
+    
+            
+            <div class="play_zhuti hide select bottom" id="player">
+                <div class="sousuo"></div>
+                <div class="center_con2">
+                    <ul>
+                        <li >
+                            <img src="images/1民谣.jpg" alt="" class="imgsize"/>
+                            <p><i><b>[理想三旬] 让民谣带你走向远方 化解悲伤</b></i></p>
+                            <span class="hot_play button">
+                                <h2 class="audionameList">音乐播放列表</h2>
+                                <audio class="audioList" controls>
+
+                                </audio>
+                            </span>
+                           
+                        </li>
+                        <li>
+                            <img src="images/2东方.jpg" alt="" class="imgsize"/>
+                            <p><i><b>[东方禅意] 碧涧流泉的袅袅余音]</b></i></p>
+                            <span class="hot_play button2">
+                                <h2 class="audionameList2">音乐播放列表</h2>
+                                <audio class="audioList2" controls>
+
+                                </audio>
+                            </span>
+                        </li>
+                        <li>
+                            <img src="images/3公路.jpg" alt="" class="imgsize"/>
+                            <p><i><b>[公路之歌] 在路上 你需要一首公路之歌</b></i></p>
+                            <span class="hot_play button3">
+                                <h2 class="audionameList3">音乐播放列表</h2>
+                                <audio class="audioList3" controls>
+
+                                </audio>
+                            </span>
+                        </li>
+                        <li>
+                            <img src="images/4阴天.jpg" alt="" class="imgsize"/>
+                            <p><i><b>[阴天快乐] 如果情绪有天气 我陷在阴天里</b></i></p>
+                            <span class="hot_play button4">
+                                <h2 class="audionameList4">音乐播放列表</h2>
+                                <audio class="audioList4" controls>
+
+                                </audio>
+                            </span>
+                        </li>
+               
+                    </ul>
+                    
+                   
+                   
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 官网提供的 axios 在线地址 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
